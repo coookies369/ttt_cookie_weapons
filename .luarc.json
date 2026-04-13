@@ -21,6 +21,8 @@
         "IN_ATTACK2",
         "IN_RELOAD",
         "SNDLVL_20dB",
-        "CHAN_AUTO"
+        "CHAN_AUTO",
+        "Material",
+        "hook"
     ]
 }
