@@ -139,7 +139,7 @@ end
 hook.Add("TTTPlayerSpeedModifier", "TTT2AWP", function(ply, _, _, speedMultiplierModifier)
     if not IsValid(ply) then return end
     if not IsValid(ply:GetActiveWeapon()) then return end
-    if ply:GetActiveWeapon():GetClass() == "weapon_ttt_awp" then
+    if ply:GetActiveWeapon():GetClass() == "weapon_ttt_cookie_awp" then
         speedMultiplierModifier[1] = speedMultiplierModifier[1] * 0.9
     end
 end)
