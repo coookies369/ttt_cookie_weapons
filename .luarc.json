@@ -1,0 +1,22 @@
+{
+    "diagnostics.globals": [
+        "SWEP",
+        "CLIENT",
+        "CurTime",
+        "BaseClass",
+        "ACT_VM_RELOAD",
+        "surface",
+        "ScrW",
+        "ScrH",
+        "IsValid",
+        "Model",
+        "Vector",
+        "Sound",
+        "WEAPON_HEAVY",
+        "AMMO_RIFLE",
+        "WEAPON_TYPE_SNIPER",
+        "DEFINE_BASECLASS",
+        "AddCSLuaFile",
+        "SERVER"
+    ]
+}
