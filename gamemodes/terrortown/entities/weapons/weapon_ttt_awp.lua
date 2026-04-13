@@ -52,6 +52,7 @@ SWEP.IronSightsPos = Vector(5, -15, -2)
 SWEP.IronSightsAng = Vector(2.6, 1.37, 3.5)
 
 SWEP.Zoom = 0
+SWEP.ZoomTime = 0
 
 function SWEP:SetZoomLevel(level)
     local owner = self:GetOwner()
@@ -64,6 +65,7 @@ function SWEP:SetZoomLevel(level)
     if level == self.Zoom then return end
 
     if self.Zoom == 0 then
+        self.ZoomTime = CurTime()
         self:EmitSound("weapons/sniper/sniper_zoomin.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
     elseif level == 0 then
         self:EmitSound("weapons/sniper/sniper_zoomout.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
@@ -189,13 +191,21 @@ if CLIENT then
 
             surface.DrawTexturedRectRotated(x, y, scope_size, scope_size, 0)
 
-            surface.DrawText(tostring(self.Zoom))
+            surface.DrawText(tostring(CurTime() - self.ZoomTime))
         else
             return BaseClass.DrawHUD(self)
         end
     end
 
     function SWEP:AdjustMouseSensitivity()
-        return self:GetIronsights() and 0.2 or nil
+        if self.Zoom == 1 then
+            return 0.2
+        elseif self.Zoom == 2 then
+            return 0.1
+        elseif self.Zoom == 3 then
+           	return 0.05
+        else
+            return nil
+        end
     end
 end
