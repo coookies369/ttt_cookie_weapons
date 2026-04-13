@@ -37,8 +37,6 @@ SWEP.Primary.ClipMax = 10
 SWEP.Primary.DefaultClip = 5
 SWEP.Primary.Sound = Sound("weapons/awp/awp1.wav")
 
-SWEP.Secondary.Sound = Sound("Default.Zoom")
-
 SWEP.HeadshotMultiplier = 4
 
 SWEP.AutoSpawnable = true
@@ -53,6 +51,8 @@ SWEP.idleResetFix = true
 SWEP.IronSightsPos = Vector(5, -15, -2)
 SWEP.IronSightsAng = Vector(2.6, 1.37, 3.5)
 
+SWEP.Zoom = 0
+
 function SWEP:SetZoom(state)
     local owner = self:GetOwner()
 
@@ -60,41 +60,47 @@ function SWEP:SetZoom(state)
         return
     end
 
-    if state then
-        owner:SetFOV(20, 0.3)
+    --Make sure zoom level is actually changing
+    if state == self.Zoom then return end
+
+    if state == 1 then
+        owner:SetFOV(20, 0.25)
+    elseif state == 2 then
+        owner:SetFOV(10, 0.25)
+    elseif state == 3 then
+        owner:SetFOV(5, 0.25)
     else
-        owner:SetFOV(0, 0.2)
+        owner:SetFOV(0, 0.25)
     end
-end
 
-function SWEP:PrimaryAttack(worldsnd)
-    BaseClass.PrimaryAttack(self, worldsnd)
+    self:SetIronsights(state ~= 0)
+    self:EmitSound("Default.Zoom")
 
-    self:SetNextSecondaryFire(CurTime() + 0.1)
+    self.Zoom = state
 end
 
 function SWEP:SecondaryAttack()
-    if not self.IronSightsPos or self:GetNextSecondaryFire() > CurTime() then
-        return
-    end
-
-    local bIronsights = not self:GetIronsights()
-
-    self:SetIronsights(bIronsights)
-    self:SetZoom(bIronsights)
-
-    if CLIENT then
-        self:EmitSound(self.Secondary.Sound)
-    end
-
-    self:SetNextSecondaryFire(CurTime() + 0.3)
 end
 
 function SWEP:PreDrop()
     self:SetIronsights(false)
-    self:SetZoom(false)
+    self:SetZoom(0)
 
     return BaseClass.PreDrop(self)
+end
+
+function SWEP:Think()
+    local player = self:GetOwner()
+    if not IsValid(player) or not player:IsPlayer() then return end
+
+    if player:KeyPressed(IN_ATTACK2) then
+        self:SetZoom(1)
+    elseif player:KeyReleased(IN_ATTACK2) then
+        self:SetZoom(0)
+    end
+    if self.Zoom ~= 0 and player:KeyPressed(IN_RELOAD) then
+        self:SetZoom(self.Zoom % 3 + 1)
+    end
 end
 
 function SWEP:Reload()
@@ -104,16 +110,21 @@ function SWEP:Reload()
     then
         return
     end
+    if self.GetIronsights() then return end
 
     self:DefaultReload(ACT_VM_RELOAD)
 
-    self:SetIronsights(false)
-    self:SetZoom(false)
+    self:SetZoom(0)
 end
 
 function SWEP:Holster()
-    self:SetIronsights(false)
-    self:SetZoom(false)
+    self:SetZoom(0)
+
+    return true
+end
+
+function SWEP:Deploy()
+    self:SetZoom(0)
 
     return true
 end
@@ -170,6 +181,8 @@ if CLIENT then
             surface.SetDrawColor(255, 255, 255, 255)
 
             surface.DrawTexturedRectRotated(x, y, scope_size, scope_size, 0)
+
+            surface.DrawText(tostring(self.Zoom))
         else
             return BaseClass.DrawHUD(self)
         end

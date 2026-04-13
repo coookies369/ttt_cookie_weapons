@@ -17,6 +17,8 @@
         "WEAPON_TYPE_SNIPER",
         "DEFINE_BASECLASS",
         "AddCSLuaFile",
-        "SERVER"
+        "SERVER",
+        "IN_ATTACK2",
+        "IN_RELOAD"
     ]
 }
