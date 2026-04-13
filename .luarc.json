@@ -23,6 +23,7 @@
         "SNDLVL_20dB",
         "CHAN_AUTO",
         "Material",
-        "hook"
+        "hook",
+        "LANG"
     ]
 }
