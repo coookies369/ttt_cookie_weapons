@@ -52,7 +52,6 @@ SWEP.IronSightsPos = Vector(5, -15, -2)
 SWEP.IronSightsAng = Vector(2.6, 1.37, 3.5)
 
 SWEP.Zoom = 0
-SWEP.ZoomTime = 0
 
 function SWEP:SetZoomLevel(level)
     local owner = self:GetOwner()
@@ -65,7 +64,6 @@ function SWEP:SetZoomLevel(level)
     if level == self.Zoom then return end
 
     if self.Zoom == 0 then
-        self.ZoomTime = CurTime()
         self:EmitSound("weapons/sniper/sniper_zoomin.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
     elseif level == 0 then
         self:EmitSound("weapons/sniper/sniper_zoomout.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
@@ -139,7 +137,7 @@ function SWEP:Deploy()
 end
 
 if CLIENT then
-    local scope = surface.GetTextureID("sprites/scope")
+    local scope = Material("gui/awp_crosshair.png", "noclamp smooth")
 
     ---
     -- @ignore
@@ -155,21 +153,12 @@ if CLIENT then
             local scope_size = scrH
 
             -- crosshair
-            local gap = 80
             local length = scope_size
 
-            surface.DrawLine(x - length, y, x - gap, y)
-            surface.DrawLine(x + length, y, x + gap, y)
-            surface.DrawLine(x, y - length, x, y - gap)
-            surface.DrawLine(x, y + length, x, y + gap)
-
-            gap = 0
-            length = 50
-
-            surface.DrawLine(x - length, y, x - gap, y)
-            surface.DrawLine(x + length, y, x + gap, y)
-            surface.DrawLine(x, y - length, x, y - gap)
-            surface.DrawLine(x, y + length, x, y + gap)
+            surface.DrawLine(x - length, y, x, y)
+            surface.DrawLine(x + length, y, x, y)
+            surface.DrawLine(x, y - length, x, y)
+            surface.DrawLine(x, y + length, x, y)
 
             -- cover edges
             local sh = 0.5 * scope_size
@@ -182,16 +171,9 @@ if CLIENT then
             surface.DrawLine(0, 0, scrW, 0)
             surface.DrawLine(0, scrH - 1, scrW, scrH - 1)
 
-            surface.SetDrawColor(255, 0, 0, 255)
-            surface.DrawLine(x, y, x + 1, y + 1)
-
             -- scope
-            surface.SetTexture(scope)
-            surface.SetDrawColor(255, 255, 255, 255)
-
-            surface.DrawTexturedRectRotated(x, y, scope_size, scope_size, 0)
-
-            surface.DrawText(tostring(CurTime() - self.ZoomTime))
+            surface.SetMaterial(scope)
+            surface.DrawTexturedRect(x - scope_size / 2, 0, scope_size, scope_size, 0)
         else
             return BaseClass.DrawHUD(self)
         end
