@@ -53,7 +53,7 @@ SWEP.IronSightsAng = Vector(2.6, 1.37, 3.5)
 
 SWEP.Zoom = 0
 
-function SWEP:SetZoom(state)
+function SWEP:SetZoomLevel(level)
     local owner = self:GetOwner()
 
     if not IsValid(owner) or not owner:IsPlayer() then
@@ -61,22 +61,29 @@ function SWEP:SetZoom(state)
     end
 
     --Make sure zoom level is actually changing
-    if state == self.Zoom then return end
+    if level == self.Zoom then return end
 
-    if state == 1 then
-        owner:SetFOV(20, 0.25)
-    elseif state == 2 then
-        owner:SetFOV(10, 0.25)
-    elseif state == 3 then
-        owner:SetFOV(5, 0.25)
+    if self.Zoom == 0 then
+        self:EmitSound("weapons/sniper/sniper_zoomin.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
+    elseif level == 0 then
+        self:EmitSound("weapons/sniper/sniper_zoomout.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
     else
-        owner:SetFOV(0, 0.25)
+        self:EmitSound("buttons/lightswitch2.wav", SNDLVL_20dB, 100 + level * 50, 0.5, CHAN_AUTO)
     end
 
-    self:SetIronsights(state ~= 0)
-    self:EmitSound("Default.Zoom")
+    if level == 1 then
+        owner:SetFOV(20, 0.5)
+    elseif level == 2 then
+        owner:SetFOV(10, 0.5)
+    elseif level == 3 then
+        owner:SetFOV(5, 0.5)
+    else
+        owner:SetFOV(0, 0.5)
+    end
 
-    self.Zoom = state
+    self:SetIronsights(level ~= 0)
+
+    self.Zoom = level
 end
 
 function SWEP:SecondaryAttack()
@@ -84,7 +91,7 @@ end
 
 function SWEP:PreDrop()
     self:SetIronsights(false)
-    self:SetZoom(0)
+    self:SetZoomLevel(0)
 
     return BaseClass.PreDrop(self)
 end
@@ -94,12 +101,12 @@ function SWEP:Think()
     if not IsValid(player) or not player:IsPlayer() then return end
 
     if player:KeyPressed(IN_ATTACK2) then
-        self:SetZoom(1)
+        self:SetZoomLevel(1)
     elseif player:KeyReleased(IN_ATTACK2) then
-        self:SetZoom(0)
+        self:SetZoomLevel(0)
     end
     if self.Zoom ~= 0 and player:KeyPressed(IN_RELOAD) then
-        self:SetZoom(self.Zoom % 3 + 1)
+        self:SetZoomLevel(self.Zoom % 3 + 1)
     end
 end
 
@@ -110,21 +117,21 @@ function SWEP:Reload()
     then
         return
     end
-    if self.GetIronsights() then return end
+    if self.Zoom ~= 0 then return end
 
     self:DefaultReload(ACT_VM_RELOAD)
 
-    self:SetZoom(0)
+    self:SetZoomLevel(0)
 end
 
 function SWEP:Holster()
-    self:SetZoom(0)
+    self:SetZoomLevel(0)
 
     return true
 end
 
 function SWEP:Deploy()
-    self:SetZoom(0)
+    self:SetZoomLevel(0)
 
     return true
 end

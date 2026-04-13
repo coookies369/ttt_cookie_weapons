@@ -19,6 +19,8 @@
         "AddCSLuaFile",
         "SERVER",
         "IN_ATTACK2",
-        "IN_RELOAD"
+        "IN_RELOAD",
+        "SNDLVL_20dB",
+        "CHAN_AUTO"
     ]
 }
