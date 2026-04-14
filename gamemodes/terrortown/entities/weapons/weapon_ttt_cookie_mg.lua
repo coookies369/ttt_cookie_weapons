@@ -29,7 +29,7 @@ SWEP.spawnType = WEAPON_TYPE_SNIPER
 SWEP.Primary.Delay = 0.1
 SWEP.Primary.Recoil = 1
 SWEP.Primary.Automatic = true
-SWEP.Primary.Ammo = "357"
+SWEP.Primary.Ammo = "AirboatGun"
 SWEP.Primary.Damage = 10
 SWEP.HeadshotMultiplier = 2
 SWEP.Primary.ClipSize = 50
@@ -41,7 +41,6 @@ SWEP.SpeedModifier = 0.8
 
 SWEP.AutoSpawnable = true
 SWEP.Spawnable = true
-SWEP.AmmoEnt = "item_ammo_357_ttt"
 
 SWEP.ViewModel = Model("models/weapons/cstrike/c_mach_m249para.mdl")
 SWEP.WorldModel = Model("models/weapons/w_mach_m249para.mdl")

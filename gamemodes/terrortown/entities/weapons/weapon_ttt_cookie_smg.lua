@@ -29,7 +29,7 @@ SWEP.spawnType = WEAPON_TYPE_SNIPER
 SWEP.Primary.Delay = 0.1
 SWEP.Primary.Recoil = 1
 SWEP.Primary.Automatic = true
-SWEP.Primary.Ammo = "357"
+SWEP.Primary.Ammo = "pistol"
 SWEP.Primary.Damage = 10
 SWEP.HeadshotMultiplier = 2
 SWEP.Primary.ClipSize = 30
@@ -41,7 +41,7 @@ SWEP.SpeedModifier = 1
 
 SWEP.AutoSpawnable = true
 SWEP.Spawnable = true
-SWEP.AmmoEnt = "item_ammo_357_ttt"
+SWEP.AmmoEnt = "item_ammo_pistol_ttt"
 
 SWEP.ViewModel = Model("models/weapons/cstrike/c_smg_ump45.mdl")
 SWEP.WorldModel = Model("models/weapons/w_smg_ump45.mdl")

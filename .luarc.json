@@ -37,6 +37,10 @@
         "HITGROUP_LEFTLEG",
         "HITGROUP_RIGHTLEG",
         "HITGROUP_GEAR",
-        "sound"
+        "sound",
+        "game",
+        "ENT",
+        "AMMO_TYPE_RIFLE",
+        "scripted_ents"
     ]
 }

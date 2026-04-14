@@ -29,7 +29,7 @@ SWEP.spawnType = WEAPON_TYPE_SNIPER
 SWEP.Primary.Delay = 0.1
 SWEP.Primary.Recoil = 1
 SWEP.Primary.Automatic = true
-SWEP.Primary.Ammo = "357"
+SWEP.Primary.Ammo = "Buckshot"
 SWEP.Primary.Damage = 10
 SWEP.HeadshotMultiplier = 2
 SWEP.Primary.NumShots = 8
@@ -42,7 +42,7 @@ SWEP.SpeedModifier = 0.9
 
 SWEP.AutoSpawnable = true
 SWEP.Spawnable = true
-SWEP.AmmoEnt = "item_ammo_357_ttt"
+SWEP.AmmoEnt = "item_box_buckshot_ttt"
 
 SWEP.ViewModel = Model("models/weapons/cstrike/c_shot_xm1014.mdl")
 SWEP.WorldModel = Model("models/weapons/w_shot_xm1014.mdl")

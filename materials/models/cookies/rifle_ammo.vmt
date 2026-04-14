@@ -1,0 +1,8 @@
+VertexLitGeneric
+{
+	$basetexture models/cookies/rifle_ammo.vtf
+	$surfaceprop cardboard
+	$envmap env_cubemap
+	$envmapmask models/cookies/rifle_ammo_mask.vtf
+	$model 1
+}
