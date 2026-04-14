@@ -18,6 +18,8 @@ SWEP.IneffectiveRangeMultiplier = 0.5
 SWEP.UseHands = true
 SWEP.idleResetFix = true
 
+--TODO: buffer inputs for non-automatic weapons
+
 function SWEP:PrimaryAttack(worldsnd)
     self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
