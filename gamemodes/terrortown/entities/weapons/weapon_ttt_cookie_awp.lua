@@ -2,7 +2,7 @@ if SERVER then
     AddCSLuaFile()
 end
 
-DEFINE_BASECLASS("weapon_tttbase")
+DEFINE_BASECLASS("weapon_ttt_cookie_base")
 
 SWEP.HoldType = "ar2"
 
@@ -19,11 +19,9 @@ if CLIENT then
     }
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base = "weapon_ttt_cookie_base"
 
 SWEP.Kind = WEAPON_HEAVY
-SWEP.WeaponID = AMMO_RIFLE
-SWEP.builtin = true
 SWEP.spawnType = WEAPON_TYPE_SNIPER
 
 SWEP.Primary.Delay = 1.5
@@ -43,10 +41,8 @@ SWEP.AutoSpawnable = true
 SWEP.Spawnable = true
 SWEP.AmmoEnt = "item_ammo_357_ttt"
 
-SWEP.UseHands = true
 SWEP.ViewModel = Model("models/weapons/cstrike/c_snip_awp.mdl")
 SWEP.WorldModel = Model("models/weapons/w_snip_awp.mdl")
-SWEP.idleResetFix = true
 
 SWEP.IronSightsPos = Vector(5, -15, -2)
 SWEP.IronSightsAng = Vector(2.6, 1.37, 3.5)
