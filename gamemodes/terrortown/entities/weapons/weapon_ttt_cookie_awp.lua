@@ -34,6 +34,7 @@ SWEP.Primary.ClipSize = 5
 SWEP.Primary.ClipMax = 10
 SWEP.Primary.DefaultClip = 5
 SWEP.Primary.Sound = Sound("weapons/awp/awp1.wav")
+SWEP.SpeedModifier = 0.9
 
 SWEP.HeadshotMultiplier = 4
 
@@ -131,14 +132,6 @@ function SWEP:Deploy()
 
     return true
 end
-
-hook.Add("TTTPlayerSpeedModifier", "TTT2AWP", function(ply, _, _, speedMultiplierModifier)
-    if not IsValid(ply) then return end
-    if not IsValid(ply:GetActiveWeapon()) then return end
-    if ply:GetActiveWeapon():GetClass() == "weapon_ttt_cookie_awp" then
-        speedMultiplierModifier[1] = speedMultiplierModifier[1] * 0.9
-    end
-end)
 
 if CLIENT then
     local scope = Material("gui/awp_crosshair.png", "noclamp smooth")

@@ -39,6 +39,7 @@ SWEP.Primary.DefaultClip = 30
 SWEP.Primary.ClipMax = 60
 SWEP.Primary.Cone = 0.005
 SWEP.Primary.Sound = Sound("weapons/ak47/ak47-1.wav")
+SWEP.SpeedModifier = 0.95
 
 SWEP.AutoSpawnable = true
 SWEP.Spawnable = true
