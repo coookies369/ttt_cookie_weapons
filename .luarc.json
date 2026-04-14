@@ -24,6 +24,19 @@
         "CHAN_AUTO",
         "Material",
         "hook",
-        "LANG"
+        "LANG",
+        "util",
+        "MASK_SHOT",
+        "Angle",
+        "DMG_BULLET",
+        "HITGROUP_HEAD",
+        "Entity",
+        "DamageInfo",
+        "HITGROUP_LEFTARM",
+        "HITGROUP_RIGHTARM",
+        "HITGROUP_LEFTLEG",
+        "HITGROUP_RIGHTLEG",
+        "HITGROUP_GEAR",
+        "sound"
     ]
 }
