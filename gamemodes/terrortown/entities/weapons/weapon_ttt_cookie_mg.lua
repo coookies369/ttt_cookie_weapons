@@ -48,3 +48,21 @@ SWEP.WorldModel = Model("models/weapons/w_mach_m249para.mdl")
 
 SWEP.IronSightsPos = Vector(-6.625, -10, 2.7)
 SWEP.IronSightsAng = Vector(2, 0, 0)
+
+
+if CLIENT then
+    local bipod = Material("gui/mg_bipod.png", "noclamp smooth")
+
+    function SWEP:DrawHUD()
+        surface.SetDrawColor(LocalPlayer().GetRoleColor and LocalPlayer():GetRoleColor() or roles.INNOCENT.color)
+
+        local scrW = ScrW()
+        local scrH = ScrH()
+        local x = 0.5 * scrW
+        local y = 0.5 * scrH
+
+        surface.SetMaterial(bipod)
+        surface.DrawTexturedRect(x - scrH/32, y + scrH/16, scrH/16, scrH/16, 0)
+        return BaseClass.DrawHUD(self)
+    end
+end
