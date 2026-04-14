@@ -34,7 +34,7 @@ SWEP.Primary.ClipSize = 5
 SWEP.Primary.ClipMax = 10
 SWEP.Primary.DefaultClip = 5
 SWEP.Primary.Sound = Sound("weapons/awp/awp1.wav")
-SWEP.SpeedModifier = 0.9
+SWEP.SpeedModifier = 0.8
 
 SWEP.HeadshotMultiplier = 4
 

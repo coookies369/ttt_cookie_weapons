@@ -10,12 +10,12 @@ if CLIENT then
     SWEP.ViewModelFlip = false
     SWEP.ViewModelFOV = 54
 
-    SWEP.Icon = "vgui/ttt/icon_aK"
+    SWEP.Icon = "vgui/ttt/icon_smg"
 
     SWEP.EquipMenuData = {
         type = "item_weapon",
-        name = "weapon_cookie_shotgun_name",
-        desc = "weapon_cookie_shotgun_desc"
+        name = "weapon_smg_name",
+        desc = "weapon_smg_desc"
     }
 end
 
@@ -32,20 +32,19 @@ SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "357"
 SWEP.Primary.Damage = 10
 SWEP.HeadshotMultiplier = 2
-SWEP.Primary.NumShots = 8
-SWEP.Primary.ClipSize = 6
-SWEP.Primary.DefaultClip = 6
-SWEP.Primary.ClipMax = 12
+SWEP.Primary.ClipSize = 30
+SWEP.Primary.DefaultClip = 30
+SWEP.Primary.ClipMax = 60
 SWEP.Primary.Cone = 0.05
-SWEP.Primary.Sound = Sound("weapons/xm1014/xm1014-1.wav")
-SWEP.SpeedModifier = 0.9
+SWEP.Primary.Sound = Sound("weapons/ump45/ump45-1.wav")
+SWEP.SpeedModifier = 1
 
 SWEP.AutoSpawnable = true
 SWEP.Spawnable = true
 SWEP.AmmoEnt = "item_ammo_357_ttt"
 
-SWEP.ViewModel = Model("models/weapons/cstrike/c_shot_xm1014.mdl")
-SWEP.WorldModel = Model("models/weapons/w_shot_xm1014.mdl")
+SWEP.ViewModel = Model("models/weapons/cstrike/c_smg_ump45.mdl")
+SWEP.WorldModel = Model("models/weapons/w_smg_ump45.mdl")
 
 SWEP.IronSightsPos = Vector(-6.625, -10, 2.7)
 SWEP.IronSightsAng = Vector(2, 0, 0)
