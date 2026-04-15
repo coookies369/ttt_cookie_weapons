@@ -1,5 +1,6 @@
 if SERVER then
     AddCSLuaFile()
+    util.AddNetworkString("UndeployMG")
 end
 
 DEFINE_BASECLASS("weapon_ttt_cookie_base")
@@ -79,6 +80,7 @@ function SWEP:SecondaryAttack()
 
         self.Primary.Recoil = self.DeployedStats.Recoil
         self.Primary.Cone = self.DeployedStats.Cone
+        self:EmitSound("weapons/tmp/tmp_clipin.wav")
     end
     return BaseClass.SecondaryAttack(self)
 end
@@ -91,6 +93,7 @@ function SWEP:GetDeployableEntity()
     local tr = util.QuickTrace(owner:EyePos() + owner:EyeAngles():Forward() * 24, owner:EyeAngles():Up() * -16, owner)
     if tr.StartSolid then return nil end
     if not tr.Hit then return nil end
+    if tr.Fraction < 0.5 then return nil end
     if tr.Entity == nil then return nil end
     return tr.Entity
 end
@@ -98,43 +101,62 @@ end
 function SWEP:Think()
     if not self.IsDeployed then return end
     local owner = self:GetOwner()
-    if not owner:IsValid() then
-        self:Undeploy()
-        return
-    end
-    if not owner:GetPos():IsEqualTol(self.DeployPosition, self.DeployPositionLimit) then
-        self:Undeploy()
-        return
-    end
-    if not self:GetIronsights() then
-        self:Undeploy()
-        return
-    end
-    if IsValid(self.DeployMount)
-        and IsValid(self.DeployMount:GetPhysicsObject())
-        and not self.DeployMount:GetPhysicsObject():IsAsleep()
-    then
-        self:Undeploy()
-        return
-    end
-
-    -- Calculate angle between where we started aiming and where we are currently aiming
-    local angle = owner:EyeAngles():Forward():Dot(self.DeployAngle:Forward())
-    angle = angle / (owner:EyeAngles():Forward():Length() * self.DeployAngle:Forward():Length())
-    angle = math.deg(math.acos(angle))
-    -- If we have turned too far, correct it
-    if angle > self.DeployAngleLimit then
-        local new_angles = LerpAngle(self.DeployAngleLimit / angle, self.DeployAngle, owner:EyeAngles())
-        new_angles.roll = 0
-        owner:SetEyeAngles(new_angles)
+    if SERVER then
+        if not owner:IsValid() then
+            self:Undeploy()
+            return
+        end
+        if not owner:GetPos():IsEqualTol(self.DeployPosition, self.DeployPositionLimit) then
+            self:Undeploy()
+            return
+        end
+        if not self:GetIronsights() then
+            self:Undeploy()
+            return
+        end
+        if IsValid(self.DeployMount)
+            and IsValid(self.DeployMount:GetPhysicsObject())
+            and not self.DeployMount:GetPhysicsObject():IsAsleep()
+        then
+            self:Undeploy()
+            return
+        end
+        -- if owner:EyeAngles():IsEqualTol(self.DeployAngle, self.DeployAngleLimit + 5) then
+        --     self:Undeploy()
+        --     return
+        -- end
+    elseif owner == LocalPlayer() then
+        -- Calculate angle between where we started aiming and where we are currently aiming
+        local angle = owner:EyeAngles():Forward():Dot(self.DeployAngle:Forward())
+        angle = angle / (owner:EyeAngles():Forward():Length() * self.DeployAngle:Forward():Length())
+        angle = math.deg(math.acos(angle))
+        -- If we have turned too far, correct it
+        if angle > self.DeployAngleLimit then
+            local new_angles = LerpAngle(self.DeployAngleLimit / angle, self.DeployAngle, owner:EyeAngles())
+            new_angles.roll = 0
+            owner:SetEyeAngles(new_angles)
+        end
     end
 end
 
 function SWEP:Undeploy()
+    if not self.IsDeployed then return end
+    self:EmitSound("weapons/tmp/tmp_clipout.wav")
     self.IsDeployed = false
     self.Primary.Recoil = self.UndeployedStats.Recoil
     self.Primary.Cone = self.UndeployedStats.Cone
+    if SERVER then
+        net.Start("UndeployMG")
+        net.WriteEntity(Entity(self:EntIndex()))
+        net.Broadcast()
+    end
 end
+
+net.Receive("UndeployMG", function()
+    local wep = net.ReadEntity()
+    if not wep:IsValid() then return end
+    wep:Undeploy()
+end )
 
 function SWEP:Holster()
     self:Undeploy()
