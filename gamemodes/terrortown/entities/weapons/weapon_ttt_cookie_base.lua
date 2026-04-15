@@ -59,11 +59,10 @@ function SWEP:PrimaryAttack(worldsnd)
     }
     owner:FireBullets(bullet)
 
-    local dmg = DamageInfo()
-	dmg:SetDamage(self.Primary.Damage)
-	dmg:SetAttacker(owner)
-	dmg:SetInflictor(self)
-	dmg:SetDamageType(DMG_BULLET)
+    local damage_info = DamageInfo()
+	damage_info:SetAttacker(owner)
+	damage_info:SetInflictor(self)
+	damage_info:SetDamageType(DMG_BULLET)
 
 	local function getHitGroupPriority(hitgroup)
         if hitgroup == HITGROUP_LEFTARM
@@ -88,7 +87,13 @@ function SWEP:PrimaryAttack(worldsnd)
                 trace = result
             end
         end
-        Entity(entIndex):DispatchTraceAttack(dmg, trace)
+        local entity = Entity(entIndex)
+        local distance = owner:GetPos():Distance(entity:GetPos())
+        local scalar = (distance - self.EffectiveRangeStop) / (self.EffectiveRangeStart - self.EffectiveRangeStop)
+        scalar = math.Clamp(scalar, 0, 1)
+        local dmg = self.Primary.Damage*self.IneffectiveRangeMultiplier + self.Primary.Damage*(1-self.IneffectiveRangeMultiplier)*scalar
+        damage_info:SetDamage(dmg)
+        entity:DispatchTraceAttack(damage_info, trace)
     end
 
     self:ShootEffects()
@@ -113,3 +118,20 @@ hook.Add("TTTPlayerSpeedModifier", "TTTCookieSpeedModifier", function(ply, _, _,
         speedMultiplierModifier[1] = speedMultiplierModifier[1] * modifier
     end
 end)
+
+if CLIENT then
+    function SWEP:DrawHUD()
+        local owner = self:GetOwner()
+        if not IsValid(owner) or owner:IsNPC() then
+            return
+        end
+        surface.SetTextPos(ScrW()/2, ScrH()/2)
+        surface.SetTextColor(0, 0, 0, 255)
+        local distance = owner:GetEyeTrace().HitPos:Distance(owner:GetPos())
+        local scalar = (distance - self.EffectiveRangeStop) / (self.EffectiveRangeStart - self.EffectiveRangeStop)
+        scalar = math.Clamp(scalar, 0, 1)
+        local dmg = self.Primary.Damage*self.IneffectiveRangeMultiplier + self.Primary.Damage*(1-self.IneffectiveRangeMultiplier)*scalar
+        surface.DrawText(tostring(dmg))
+        return BaseClass.DrawHUD(self)
+    end
+end

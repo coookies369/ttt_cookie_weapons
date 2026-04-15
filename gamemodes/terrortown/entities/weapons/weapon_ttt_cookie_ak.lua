@@ -24,6 +24,10 @@ SWEP.Base = "weapon_ttt_cookie_base"
 SWEP.Kind = WEAPON_HEAVY
 SWEP.spawnType = WEAPON_TYPE_SNIPER
 
+SWEP.EffectiveRangeStart = 1000
+SWEP.EffectiveRangeStop = 3000
+SWEP.IneffectiveRangeMultiplier = 0.25
+
 -- (HP/DMG) * (60/RPM) = TTK
 -- 1
 -- 0.5 Headshot

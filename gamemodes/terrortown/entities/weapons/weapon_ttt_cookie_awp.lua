@@ -24,6 +24,10 @@ SWEP.Base = "weapon_ttt_cookie_base"
 SWEP.Kind = WEAPON_HEAVY
 SWEP.spawnType = WEAPON_TYPE_SNIPER
 
+SWEP.EffectiveRangeStart = 3000
+SWEP.EffectiveRangeStop = 1000
+SWEP.IneffectiveRangeMultiplier = 0.25
+
 SWEP.Primary.Delay = 1.5
 SWEP.Primary.Recoil = 7
 SWEP.Primary.Automatic = true
