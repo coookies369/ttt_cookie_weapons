@@ -41,6 +41,9 @@
         "game",
         "ENT",
         "AMMO_TYPE_RIFLE",
-        "scripted_ents"
+        "scripted_ents",
+        "LocalPlayer",
+        "roles",
+        "LerpAngle"
     ]
 }
