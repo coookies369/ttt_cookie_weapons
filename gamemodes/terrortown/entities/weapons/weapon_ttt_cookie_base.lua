@@ -100,6 +100,16 @@ function SWEP:PrimaryAttack(worldsnd)
 
     self:TakePrimaryAmmo(1)
 
+    if
+        SERVER and game.SinglePlayer()
+        or CLIENT and not game.SinglePlayer() and IsFirstTimePredicted()
+    then
+        local eyeang = owner:EyeAngles()
+        eyeang.pitch = eyeang.pitch - self:GetPrimaryRecoil()
+
+        owner:SetEyeAngles(eyeang)
+    end
+
     if not owner.ViewPunch then return end
     owner:ViewPunch(
         Angle(

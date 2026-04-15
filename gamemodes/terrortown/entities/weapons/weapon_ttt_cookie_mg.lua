@@ -32,7 +32,7 @@ SWEP.DeployedStats.Recoil = 2
 SWEP.DeployedStats.Cone = 0.01
 
 SWEP.UndeployedStats = {}
-SWEP.UndeployedStats.Recoil = 6
+SWEP.UndeployedStats.Recoil = 4
 SWEP.UndeployedStats.Cone = 0.1
 
 SWEP.Primary.Delay = 0.1
