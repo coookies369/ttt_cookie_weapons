@@ -171,7 +171,7 @@ function SWEP:Deploy()
 end
 
 if CLIENT then
-    local bipod = Material("gui/mg_bipod.png", "noclamp smooth")
+    local bipod = Material("gui/cookie/mg_bipod.png", "noclamp smooth")
 
     function SWEP:DrawHUD()
         if self:GetDeployableEntity() ~= nil then

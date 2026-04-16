@@ -138,7 +138,7 @@ function SWEP:Deploy()
 end
 
 if CLIENT then
-    local scope = Material("gui/awp_crosshair.png", "noclamp smooth")
+    local scope = Material("gui/cookie/awp_crosshair.png", "noclamp smooth")
 
     ---
     -- @ignore
