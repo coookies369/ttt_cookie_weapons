@@ -54,8 +54,8 @@ SWEP.Spawnable = true
 SWEP.ViewModel = Model("models/weapons/cstrike/c_mach_m249para.mdl")
 SWEP.WorldModel = Model("models/weapons/w_mach_m249para.mdl")
 
-SWEP.IronSightsPos = Vector(-6.625, -10, 2.7)
-SWEP.IronSightsAng = Vector(2, 0, 0)
+SWEP.IronSightsPos = Vector(-5.96, -5.119, 2.349)
+SWEP.IronSightsAng = Vector(0, 0, 0)
 
 SWEP.DeployPositionLimit = 4
 SWEP.DeployAngleLimit = 45

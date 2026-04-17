@@ -72,8 +72,8 @@ SWEP.AmmoEnt = "item_box_buckshot_ttt"
 SWEP.ViewModel = Model("models/weapons/cstrike/c_shot_xm1014.mdl")
 SWEP.WorldModel = Model("models/weapons/w_shot_xm1014.mdl")
 
-SWEP.IronSightsPos = Vector(-6.625, -10, 2.7)
-SWEP.IronSightsAng = Vector(2, 0, 0)
+SWEP.IronSightsPos = Vector(-6.881, -9.214, 2.66)
+SWEP.IronSightsAng = Vector(-0.101, -0.7, -0.201)
 
 
 function SWEP:SetupDataTables()

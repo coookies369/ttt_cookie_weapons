@@ -46,5 +46,5 @@ SWEP.AmmoEnt = "item_ammo_pistol_ttt"
 SWEP.ViewModel = Model("models/weapons/cstrike/c_smg_ump45.mdl")
 SWEP.WorldModel = Model("models/weapons/w_smg_ump45.mdl")
 
-SWEP.IronSightsPos = Vector(-6.625, -10, 2.7)
-SWEP.IronSightsAng = Vector(2, 0, 0)
+SWEP.IronSightsPos = Vector(-8.735, -10, 4.039)
+SWEP.IronSightsAng = Vector(-1.201, -0.201, -2)
