@@ -9,9 +9,9 @@
    id="svg1"
    inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
    sodipodi:docname="buckshot.svg"
-   inkscape:export-filename="../buckshot.png"
-   inkscape:export-xdpi="192"
-   inkscape:export-ydpi="192"
+   inkscape:export-filename="../cookie/buckshot.png"
+   inkscape:export-xdpi="384"
+   inkscape:export-ydpi="384"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -23,13 +23,13 @@
      borderopacity="0.25"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
+     inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="true"
      inkscape:zoom="6.8496"
-     inkscape:cx="14.67239"
-     inkscape:cy="51.097874"
+     inkscape:cx="22.994043"
+     inkscape:cy="32.70264"
      inkscape:window-width="1920"
      inkscape:window-height="1056"
      inkscape:window-x="0"
@@ -59,47 +59,7 @@
      id="layer1">
     <path
        id="path3"
-       style="fill:#e01b24;stroke:#000000;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
-       d="M 2.1166665,5.2916663 V 11.641666 H 2.6458332 V 11.112499 H 4.2333331 14.816666 V 5.820833 H 4.2333331 2.6458332 V 5.2916663 Z" />
-    <circle
-       style="fill:#000000;stroke:none;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
-       id="path7"
-       cx="5.291667"
-       cy="7.4083328"
-       r="1.0583333" />
-    <circle
-       style="fill:#000000;stroke:none;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
-       id="path7-6"
-       cx="6.8791666"
-       cy="9.5249996"
-       r="1.0583333" />
-    <circle
-       style="fill:#000000;stroke:none;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
-       id="path7-3"
-       cx="11.641666"
-       cy="7.4083328"
-       r="1.0583333" />
-    <circle
-       style="fill:#000000;stroke:none;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
-       id="path7-61"
-       cx="10.054167"
-       cy="9.5249996"
-       r="1.0583333" />
-    <circle
-       style="fill:#000000;stroke:none;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
-       id="path7-9"
-       cx="13.229166"
-       cy="9.5249996"
-       r="1.0583333" />
-    <circle
-       style="fill:#000000;stroke:none;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
-       id="path7-7"
-       cx="8.4666662"
-       cy="7.4083328"
-       r="1.0583333" />
-    <path
-       id="rect9"
-       style="fill:#000000;stroke:none;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
-       d="M 2.1166665,5.2916663 V 11.641666 H 2.6458332 V 11.1125 H 3.7041665 V 5.820833 H 2.6458332 V 5.2916663 Z" />
+       style="fill:#ffffff;stroke:none;stroke-width:0.264583;stroke-linecap:square;paint-order:stroke markers fill"
+       d="M 2.1166666 5.2916666 L 2.1166666 11.641666 L 2.6458333 11.641666 L 2.6458333 11.1125 L 4.2333332 11.1125 L 14.816666 11.1125 L 14.816666 5.8208332 L 4.2333332 5.8208332 L 2.6458333 5.8208332 L 2.6458333 5.2916666 L 2.1166666 5.2916666 z M 2.6458333 6.3499999 L 3.7041666 6.3499999 L 3.7041666 10.583333 L 2.6458333 10.583333 L 2.6458333 6.3499999 z M 5.2916666 6.3499999 A 1.0583333 1.0583333 0 0 1 6.3499999 7.4083332 A 1.0583333 1.0583333 0 0 1 5.2916666 8.4666665 A 1.0583333 1.0583333 0 0 1 4.2333332 7.4083332 A 1.0583333 1.0583333 0 0 1 5.2916666 6.3499999 z M 8.4666665 6.3499999 A 1.0583333 1.0583333 0 0 1 9.5249998 7.4083332 A 1.0583333 1.0583333 0 0 1 8.4666665 8.4666665 A 1.0583333 1.0583333 0 0 1 7.4083332 7.4083332 A 1.0583333 1.0583333 0 0 1 8.4666665 6.3499999 z M 11.641666 6.3499999 A 1.0583333 1.0583333 0 0 1 12.7 7.4083332 A 1.0583333 1.0583333 0 0 1 11.641666 8.4666665 A 1.0583333 1.0583333 0 0 1 10.583333 7.4083332 A 1.0583333 1.0583333 0 0 1 11.641666 6.3499999 z M 6.8791665 8.4666665 A 1.0583333 1.0583333 0 0 1 7.9374998 9.5249998 A 1.0583333 1.0583333 0 0 1 6.8791665 10.583333 A 1.0583333 1.0583333 0 0 1 5.8208332 9.5249998 A 1.0583333 1.0583333 0 0 1 6.8791665 8.4666665 z M 10.054166 8.4666665 A 1.0583333 1.0583333 0 0 1 11.1125 9.5249998 A 1.0583333 1.0583333 0 0 1 10.054166 10.583333 A 1.0583333 1.0583333 0 0 1 8.9958332 9.5249998 A 1.0583333 1.0583333 0 0 1 10.054166 8.4666665 z M 13.229166 8.4666665 A 1.0583333 1.0583333 0 0 1 14.2875 9.5249998 A 1.0583333 1.0583333 0 0 1 13.229166 10.583333 A 1.0583333 1.0583333 0 0 1 12.170833 9.5249998 A 1.0583333 1.0583333 0 0 1 13.229166 8.4666665 z " />
   </g>
 </svg>

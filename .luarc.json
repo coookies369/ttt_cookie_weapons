@@ -45,6 +45,10 @@
         "LocalPlayer",
         "roles",
         "LerpAngle",
-        "net"
+        "net",
+        "ACT_SHOTGUN_RELOAD_START",
+        "timer",
+        "ACT_SHOTGUN_RELOAD_FINISH",
+        "Color"
     ]
 }
