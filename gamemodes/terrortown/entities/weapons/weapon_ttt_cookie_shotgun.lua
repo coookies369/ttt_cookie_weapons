@@ -24,17 +24,30 @@ SWEP.Base = "weapon_ttt_cookie_base"
 SWEP.Kind = WEAPON_HEAVY
 SWEP.spawnType = WEAPON_TYPE_SNIPER
 
-SWEP.Buckshot = {}
-SWEP.Buckshot.NumShots = 8
-SWEP.Buckshot.Damage = 10
-SWEP.Buckshot.HeadshotMultiplier = 2
-SWEP.Buckshot.Cone = 0.05
+BUCKSHOT = 1
+SLUG = 2
+FLECHETTE = 3
 
-SWEP.Slug = {}
-SWEP.Slug.NumShots = 1
-SWEP.Slug.Damage = 10
-SWEP.Slug.HeadshotMultiplier = 2
-SWEP.Slug.Cone = 0.005
+STATS = {
+    [BUCKSHOT] = {
+        NumShots = 8,
+        Damage = 10,
+        HeadshotMultiplier = 2,
+        Cone = 0.05,
+    },
+    [SLUG] = {
+        NumShots = 1,
+        Damage = 10,
+        HeadshotMultiplier = 2,
+        Cone = 0.005,
+    },
+    [FLECHETTE] = {
+        NumShots = 20,
+        Damage = 10,
+        HeadshotMultiplier = 2,
+        Cone = 0.05,
+    }
+}
 
 -- (HP/DMG) * (60/RPM) = TTK
 
@@ -42,13 +55,13 @@ SWEP.Primary.Delay = 0.6
 SWEP.Primary.Recoil = 1
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "Buckshot"
-SWEP.Primary.Damage = SWEP.Buckshot.Damage
-SWEP.HeadshotMultiplier = SWEP.Buckshot.HeadshotMultiplier
-SWEP.Primary.NumShots = SWEP.Buckshot.NumShots
+SWEP.Primary.Damage = STATS[BUCKSHOT].Damage
+SWEP.HeadshotMultiplier = STATS[BUCKSHOT].HeadshotMultiplier
+SWEP.Primary.NumShots = STATS[BUCKSHOT].NumShots
 SWEP.Primary.ClipSize = 6
 SWEP.Primary.DefaultClip = 6
 SWEP.Primary.ClipMax = 12
-SWEP.Primary.Cone = SWEP.Buckshot.Cone
+SWEP.Primary.Cone = STATS[BUCKSHOT].Cone
 SWEP.Primary.Sound = Sound("weapons/xm1014/xm1014-1.wav")
 SWEP.SpeedModifier = 0.9
 
@@ -62,14 +75,50 @@ SWEP.WorldModel = Model("models/weapons/w_shot_xm1014.mdl")
 SWEP.IronSightsPos = Vector(-6.625, -10, 2.7)
 SWEP.IronSightsAng = Vector(2, 0, 0)
 
-BUCKSHOT = 1
-SLUG = 2
-FLECHETTE = 3
-
-SWEP.Shells = {BUCKSHOT, SLUG, FLECHETTE, BUCKSHOT, BUCKSHOT, BUCKSHOT}
 
 function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "Reloading")
+    self:NetworkVar("String", 0, "Shells")
+    self:NetworkVar("Int", 0, "SelectedShell")
+end
+
+function SWEP:Initialize()
+    self:SetSelectedShell(BUCKSHOT)
+    self:SetShells(util.TableToJSON({ BUCKSHOT, BUCKSHOT, BUCKSHOT, BUCKSHOT, BUCKSHOT, BUCKSHOT }))
+end
+
+function SWEP:PrimaryAttack()
+    BaseClass.PrimaryAttack(self)
+    self:CycleShells()
+end
+
+function SWEP:CycleShells()
+    local shells = util.JSONToTable(self:GetShells())
+    table.remove(shells, #shells)
+    self:SetShells(util.TableToJSON(shells))
+    self:UpdateStats()
+end
+
+function SWEP:UpdateStats()
+    local shells = util.JSONToTable(self:GetShells())
+    local shell = shells[#shells]
+    if shell == nil then return end
+    local stats = STATS[shell]
+    self.Primary.NumShots = stats.NumShots
+    self.Primary.Damage = stats.Damage
+    self.Primary.HeadshotMultiplier = stats.HeadshotMultiplier
+    self.Primary.Cone = stats.Cone
+end
+
+function SWEP:ChangeSelectedShell()
+    local selected_shell = self:GetSelectedShell()
+    if selected_shell == BUCKSHOT then
+        self:SetSelectedShell(SLUG)
+    elseif selected_shell == SLUG then
+        self:SetSelectedShell(FLECHETTE)
+    else
+        self:SetSelectedShell(BUCKSHOT)
+    end
 end
 
 function SWEP:Reload()
@@ -83,10 +132,30 @@ function SWEP:Reload()
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
     self:SendWeaponAnim(ACT_VM_RELOAD)
+    timer.Simple(0.2, function()
+        self:SetClip1(self:Clip1() + 1)
+        local shells = util.JSONToTable(self:GetShells())
+        local selected_shell = self:GetSelectedShell()
+        if selected_shell < 1 or selected_shell > 3 then
+            selected_shell = BUCKSHOT
+        end
+        table.insert(shells, #shells + 1, selected_shell)
+        self:SetShells(util.TableToJSON(shells))
+        self:UpdateStats()
+        owner:RemoveAmmo(1, self.Primary.Ammo, false)
+    end)
     timer.Simple(self:SequenceDuration() - 0.1, function()
         self:SetReloading(false)
-        self:SetClip1(self:Clip1() + 1)
+        self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH)
     end)
+end
+
+function SWEP:Think()
+    local owner = self:GetOwner()
+    if not IsValid(owner) or not owner:IsPlayer() then return end
+    if owner:KeyPressed(IN_WALK) then
+        self:ChangeSelectedShell()
+    end
 end
 
 if CLIENT then
@@ -113,13 +182,25 @@ if CLIENT then
         local tube_height = shell_size * 0.6
 
         surface.SetDrawColor(0, 0, 0)
+        -- Tube
         surface.DrawRect(x + shell_size * -3, scrH - tube_height - (shell_size - tube_height)/2, shell_size * 6, tube_height)
+        -- Selected shell
+        surface.DrawRect(x + shell_size * -4.5, scrH - tube_height - (shell_size - tube_height)/2, shell_size, tube_height)
 
-        for index, shell in pairs(self.Shells) do
+        local shells = util.JSONToTable(self:GetShells())
+        for index, shell in pairs(shells) do
             surface.SetMaterial(shell_materials[shell])
             surface.SetDrawColor(shell_colors[shell])
-            surface.DrawTexturedRect(x + (shell_size * -3) + ((index-1) * shell_size), scrH - shell_size, shell_size, shell_size)
+            surface.DrawTexturedRect(x + (shell_size * -3) + ((#shells - index) * shell_size), scrH - shell_size, shell_size, shell_size)
         end
+
+        local selected_shell = self:GetSelectedShell()
+        if selected_shell < 1 or selected_shell > 3 then
+            selected_shell = BUCKSHOT
+        end
+        surface.SetMaterial(shell_materials[selected_shell])
+        surface.SetDrawColor(shell_colors[selected_shell])
+        surface.DrawTexturedRect(x + shell_size * -4.5, scrH - shell_size, shell_size, shell_size)
 
         return BaseClass.DrawHUD(self)
     end
