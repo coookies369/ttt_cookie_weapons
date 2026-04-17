@@ -85,6 +85,7 @@ end
 function SWEP:Initialize()
     self:SetSelectedShell(BUCKSHOT)
     self:SetShells(util.TableToJSON({ BUCKSHOT, BUCKSHOT, BUCKSHOT, BUCKSHOT, BUCKSHOT, BUCKSHOT }))
+    BaseClass.Initialize(self)
 end
 
 function SWEP:PrimaryAttack()
