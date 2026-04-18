@@ -108,10 +108,12 @@ function SWEP:Think()
     if player:KeyPressed(IN_ATTACK2) then
         self:EmitSound("weapons/sniper/sniper_zoomin.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
         self:SetZoomed(true)
+        self:SetIronsights(true)
         self:UpdateFOV()
     elseif player:KeyReleased(IN_ATTACK2) then
         self:EmitSound("weapons/sniper/sniper_zoomout.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
         self:SetZoomed(false)
+        self:SetIronsights(false)
         self:UpdateFOV()
     end
     if self:GetZoomed() and player:KeyPressed(IN_RELOAD) then
