@@ -49,6 +49,13 @@
         "ACT_SHOTGUN_RELOAD_START",
         "timer",
         "ACT_SHOTGUN_RELOAD_FINISH",
-        "Color"
+        "Color",
+        "FrameTime",
+        "IsFirstTimePredicted",
+        "IN_WALK",
+        "Lerp"
+    ],
+    "diagnostics.disable": [
+        "duplicate-set-field"
     ]
 }
