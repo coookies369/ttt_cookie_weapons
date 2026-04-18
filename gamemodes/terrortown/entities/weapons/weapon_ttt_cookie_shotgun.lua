@@ -80,6 +80,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", 0, "Reloading")
     self:NetworkVar("String", 0, "Shells")
     self:NetworkVar("Int", 0, "SelectedShell")
+    BaseClass.SetupDataTables(self)
 end
 
 function SWEP:Initialize()
