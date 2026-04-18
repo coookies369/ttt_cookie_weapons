@@ -52,39 +52,43 @@ SWEP.WorldModel = Model("models/weapons/w_snip_awp.mdl")
 SWEP.IronSightsPos = Vector(5, -15, -2)
 SWEP.IronSightsAng = Vector(2.6, 1.37, 3.5)
 
-SWEP.Zoom = 0
+function SWEP:SetupDataTables()
+    self:NetworkVar("Bool", 0, "Zoomed")
+    self:NetworkVar("Int", 0, "ZoomLevel")
+end
 
-function SWEP:SetZoomLevel(level)
+function SWEP:Initialize()
+    self:SetZoomed(false)
+    self:SetZoomLevel(1)
+    BaseClass.Initialize(self)
+end
+
+function SWEP:CycleZoomLevel()
+    local zoomLevel = self:GetZoomLevel()
+    zoomLevel = zoomLevel % 3 + 1
+    self:EmitSound("buttons/lightswitch2.wav", SNDLVL_20dB, 100 + zoomLevel * 50, 0.5, CHAN_AUTO)
+    self:SetZoomLevel(zoomLevel)
+    self:UpdateFOV()
+end
+
+function SWEP:UpdateFOV()
     local owner = self:GetOwner()
-
     if not IsValid(owner) or not owner:IsPlayer() then
         return
     end
 
-    --Make sure zoom level is actually changing
-    if level == self.Zoom then return end
-
-    if self.Zoom == 0 then
-        self:EmitSound("weapons/sniper/sniper_zoomin.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
-    elseif level == 0 then
-        self:EmitSound("weapons/sniper/sniper_zoomout.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
-    else
-        self:EmitSound("buttons/lightswitch2.wav", SNDLVL_20dB, 100 + level * 50, 0.5, CHAN_AUTO)
-    end
-
-    if level == 1 then
-        owner:SetFOV(20, 0.5)
-    elseif level == 2 then
-        owner:SetFOV(10, 0.5)
-    elseif level == 3 then
-        owner:SetFOV(5, 0.5)
+    if self:GetZoomed() then
+        local zoomLevel = self:GetZoomLevel()
+        if zoomLevel == 1 then
+            owner:SetFOV(20, 0.5)
+        elseif zoomLevel == 2 then
+            owner:SetFOV(10, 0.5)
+        elseif zoomLevel == 3 then
+            owner:SetFOV(5, 0.5)
+        end
     else
         owner:SetFOV(0, 0.5)
     end
-
-    self:SetIronsights(level ~= 0)
-
-    self.Zoom = level
 end
 
 function SWEP:SecondaryAttack()
@@ -92,7 +96,7 @@ end
 
 function SWEP:PreDrop()
     self:SetIronsights(false)
-    self:SetZoomLevel(0)
+    self:SetZoomed(false)
 
     return BaseClass.PreDrop(self)
 end
@@ -102,12 +106,16 @@ function SWEP:Think()
     if not IsValid(player) or not player:IsPlayer() then return end
 
     if player:KeyPressed(IN_ATTACK2) then
-        self:SetZoomLevel(1)
+        self:EmitSound("weapons/sniper/sniper_zoomin.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
+        self:SetZoomed(true)
+        self:UpdateFOV()
     elseif player:KeyReleased(IN_ATTACK2) then
-        self:SetZoomLevel(0)
+        self:EmitSound("weapons/sniper/sniper_zoomout.wav", SNDLVL_20dB, 100, 1, CHAN_AUTO)
+        self:SetZoomed(false)
+        self:UpdateFOV()
     end
-    if self.Zoom ~= 0 and player:KeyPressed(IN_RELOAD) then
-        self:SetZoomLevel(self.Zoom % 3 + 1)
+    if self:GetZoomed() and player:KeyPressed(IN_RELOAD) then
+        self:CycleZoomLevel()
     end
 end
 
@@ -122,17 +130,19 @@ function SWEP:Reload()
 
     self:DefaultReload(ACT_VM_RELOAD)
 
-    self:SetZoomLevel(0)
+    self:SetZoomed(false)
 end
 
 function SWEP:Holster()
-    self:SetZoomLevel(0)
+    self:SetIronsights(false)
+    self:SetZoomed(false)
 
     return true
 end
 
 function SWEP:Deploy()
-    self:SetZoomLevel(0)
+    self:SetIronsights(false)
+    self:SetZoomed(false)
 
     return true
 end
@@ -143,7 +153,7 @@ if CLIENT then
     ---
     -- @ignore
     function SWEP:DrawHUD()
-        if self:GetIronsights() then
+        if self:GetZoomed() then
             surface.SetDrawColor(0, 0, 0, 255)
 
             local scrW = ScrW()
@@ -181,14 +191,14 @@ if CLIENT then
     end
 
     function SWEP:AdjustMouseSensitivity()
-        if self.Zoom == 1 then
+        if not self:GetZoomed() then return end
+        local zoomLevel = self:GetZoomLevel()
+        if zoomLevel == 1 then
             return 0.2
-        elseif self.Zoom == 2 then
+        elseif zoomLevel == 2 then
             return 0.1
-        elseif self.Zoom == 3 then
+        elseif zoomLevel == 3 then
            	return 0.05
-        else
-            return nil
         end
     end
 end
