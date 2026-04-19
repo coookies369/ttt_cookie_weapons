@@ -53,7 +53,8 @@
         "FrameTime",
         "IsFirstTimePredicted",
         "IN_WALK",
-        "Lerp"
+        "Lerp",
+        "SNDLVL_30dB"
     ],
     "diagnostics.disable": [
         "duplicate-set-field"

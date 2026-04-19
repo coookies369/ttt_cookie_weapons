@@ -9,7 +9,7 @@
    id="svg1"
    inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
    sodipodi:docname="awp_crosshair.svg"
-   inkscape:export-filename="awp_crosshair.png"
+   inkscape:export-filename="../cookie/awp_crosshair.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -29,14 +29,15 @@
      inkscape:document-units="px"
      showgrid="true"
      inkscape:zoom="0.76078844"
-     inkscape:cx="713.07603"
+     inkscape:cx="713.73324"
      inkscape:cy="502.11068"
      inkscape:window-width="1920"
      inkscape:window-height="1056"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="layer1"
+     inkscape:export-bgcolor="#00000000">
     <inkscape:grid
        id="grid1"
        units="px"
