@@ -14,8 +14,8 @@ if CLIENT then
 
     SWEP.EquipMenuData = {
         type = "item_weapon",
-        name = "weapon_ak_name",
-        desc = "weapon_ak_desc"
+        name = "weapon_cookie_ak_name",
+        desc = "weapon_cookie_ak_desc"
     }
 end
 

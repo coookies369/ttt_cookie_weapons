@@ -14,8 +14,8 @@ if CLIENT then
 
     SWEP.EquipMenuData = {
         type = "item_weapon",
-        name = "weapon_smg_name",
-        desc = "weapon_smg_desc"
+        name = "weapon_cookie_smg_name",
+        desc = "weapon_cookie_smg_desc"
     }
 end
 
@@ -36,15 +36,15 @@ SWEP.Primary.ClipSize = 30
 SWEP.Primary.DefaultClip = 30
 SWEP.Primary.ClipMax = 60
 SWEP.Primary.Cone = 0.05
-SWEP.Primary.Sound = Sound("weapons/ump45/ump45-1.wav")
+SWEP.Primary.Sound = Sound("weapons/mac10/mac10-1.wav")
 SWEP.SpeedModifier = 1
 
 SWEP.AutoSpawnable = true
 SWEP.Spawnable = true
 SWEP.AmmoEnt = "item_ammo_pistol_ttt"
 
-SWEP.ViewModel = Model("models/weapons/cstrike/c_smg_ump45.mdl")
-SWEP.WorldModel = Model("models/weapons/w_smg_ump45.mdl")
+SWEP.ViewModel = Model("models/weapons/cstrike/c_smg_mac10.mdl")
+SWEP.WorldModel = Model("models/weapons/w_smg_mac10.mdl")
 
 SWEP.IronSightsPos = Vector(-8.735, -10, 4.039)
 SWEP.IronSightsAng = Vector(-1.201, -0.201, -2)
