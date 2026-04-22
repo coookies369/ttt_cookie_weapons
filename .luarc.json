@@ -54,7 +54,8 @@
         "IsFirstTimePredicted",
         "IN_WALK",
         "Lerp",
-        "SNDLVL_30dB"
+        "SNDLVL_30dB",
+        "weapons"
     ],
     "diagnostics.disable": [
         "duplicate-set-field"
